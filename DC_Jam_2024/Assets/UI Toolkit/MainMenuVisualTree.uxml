@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=24a1c28eb3da99448a3ad52e2ae932cd&amp;type=3#MainMenuStyle" />
+    <ui:VisualElement name="Background" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Prefabs/Temp-Space-BG.png?fileID=2800000&amp;guid=2b5a5e710e1ac0f4e879968faf494d5f&amp;type=3#Temp-Space-BG&quot;);">
+        <ui:Label tabindex="-1" text="Awesome Title" parse-escape-sequences="true" display-tooltip-when-elided="true" name="GameTitle" class="header" />
+        <ui:Label tabindex="-1" text="Play" parse-escape-sequences="true" display-tooltip-when-elided="true" name="PlayButton" class="button" />
+        <ui:Label tabindex="-1" text="Options" parse-escape-sequences="true" display-tooltip-when-elided="true" name="OptionsButton" class="button" />
+        <ui:Label tabindex="-1" text="Credits" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CreditsButton" class="button" />
+    </ui:VisualElement>
+</ui:UXML>
