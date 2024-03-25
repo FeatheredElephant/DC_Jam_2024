@@ -28,8 +28,13 @@ public class PlayerMovingState : PlayerState
         throw new System.NotImplementedException();
     }
 
-    public override void PhysicsUpdate()
+    public override void handleMoveInput(Vector2 input)
     {
-        base.PhysicsUpdate();
+        throw new System.NotImplementedException();
+    }
+
+    public override void handleTurnInput(float input)
+    {
+        throw new System.NotImplementedException();
     }
 }
