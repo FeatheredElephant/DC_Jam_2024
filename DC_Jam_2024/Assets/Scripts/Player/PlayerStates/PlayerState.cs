@@ -16,6 +16,10 @@ public abstract class PlayerState
     public abstract void EnterState();
     public abstract void ExitState();
     public abstract void FrameUpdate();
+
+    public abstract void handleMoveInput(Vector2 input);
+    public abstract void handleTurnInput(float input);
+
     public virtual void PhysicsUpdate() { throw new System.NotImplementedException(); }
     public virtual void AnimationTriggerEvent(PlayerManager.AnimationTriggerType triggerType) { throw new System.NotImplementedException(); }
 }

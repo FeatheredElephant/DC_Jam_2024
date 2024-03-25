@@ -4,11 +4,5 @@ using UnityEngine;
 
 public class Helper
 {
-    public enum Direction
-    {
-        North,
-        East,
-        South,
-        West
-    }
+
 }
