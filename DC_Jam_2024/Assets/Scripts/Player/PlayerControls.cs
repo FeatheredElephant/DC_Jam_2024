@@ -44,6 +44,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Cut"",
+                    ""type"": ""Value"",
+                    ""id"": ""a09ed49e-20d8-43a8-b325-b15071ff9a5d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -134,6 +143,39 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""MouseDrag"",
+                    ""id"": ""4ef3d506-ce91-4aac-bba6-e6e8d10e2112"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cut"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""7d0e5cb8-6d3b-4302-9d75-88ca68ed3ae5"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cut"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""0081e264-4f08-4dbf-94fe-55cee3f468e0"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cut"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -144,6 +186,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Default = asset.FindActionMap("Default", throwIfNotFound: true);
         m_Default_Move = m_Default.FindAction("Move", throwIfNotFound: true);
         m_Default_Turn = m_Default.FindAction("Turn", throwIfNotFound: true);
+        m_Default_Cut = m_Default.FindAction("Cut", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,12 +250,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IDefaultActions> m_DefaultActionsCallbackInterfaces = new List<IDefaultActions>();
     private readonly InputAction m_Default_Move;
     private readonly InputAction m_Default_Turn;
+    private readonly InputAction m_Default_Cut;
     public struct DefaultActions
     {
         private @PlayerControls m_Wrapper;
         public DefaultActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Default_Move;
         public InputAction @Turn => m_Wrapper.m_Default_Turn;
+        public InputAction @Cut => m_Wrapper.m_Default_Cut;
         public InputActionMap Get() { return m_Wrapper.m_Default; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -228,6 +273,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Turn.started += instance.OnTurn;
             @Turn.performed += instance.OnTurn;
             @Turn.canceled += instance.OnTurn;
+            @Cut.started += instance.OnCut;
+            @Cut.performed += instance.OnCut;
+            @Cut.canceled += instance.OnCut;
         }
 
         private void UnregisterCallbacks(IDefaultActions instance)
@@ -238,6 +286,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Turn.started -= instance.OnTurn;
             @Turn.performed -= instance.OnTurn;
             @Turn.canceled -= instance.OnTurn;
+            @Cut.started -= instance.OnCut;
+            @Cut.performed -= instance.OnCut;
+            @Cut.canceled -= instance.OnCut;
         }
 
         public void RemoveCallbacks(IDefaultActions instance)
@@ -259,5 +310,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnTurn(InputAction.CallbackContext context);
+        void OnCut(InputAction.CallbackContext context);
     }
 }
