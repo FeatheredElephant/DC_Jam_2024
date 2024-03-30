@@ -1,0 +1,20 @@
+.header {
+    align-self: center;
+    font-size: 60px;
+    margin-top: 128px;
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(255, 255, 255);
+    top: 64px;
+}
+
+.button {
+    font-size: 35px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+    width: 200px;
+    height: 80px;
+    -unity-text-align: middle-center;
+    align-self: center;
+    margin-top: 24px;
+    top: 172px;
+}
