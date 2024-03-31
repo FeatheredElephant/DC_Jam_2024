@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6271c93a47a5442429a64aa3444d5273
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - <swordCursorTexture>k__BackingField: {fileID: 2800000, guid: 2f2b9f538ebfd6845970c78d4f3a821a, type: 3}
+  - <openHandCursorTexture>k__BackingField: {fileID: 2800000, guid: 68fb60adf4ee8074aadbb5fa81e70c9f, type: 3}
+  - <closedHandCursorTexture>k__BackingField: {fileID: 2800000, guid: a2f6bbf7e4226b041a5f74848735b93c, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

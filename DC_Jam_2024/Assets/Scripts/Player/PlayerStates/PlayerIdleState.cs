@@ -28,9 +28,23 @@ public class PlayerIdleState : PlayerState
     }
 
     public override void handleMoveInput(Vector2 input)
-    {
+    {        
         Vector3 currentPosition = playerManager.transform.position;
         Vector3 targetPosition = currentPosition;
+
+        Vector3 Move(Vector3 currentPosition, Vector3 direction)
+        {
+            if (Physics.Raycast(currentPosition, direction, out _, playerManager.MoveSpeed, playerManager.DetectsCollitionsWith))
+            {
+                Debug.Log("Collision detected.");
+                return currentPosition;
+            }
+            return currentPosition + direction * playerManager.MoveSpeed;
+        }
+        Vector3 MoveRight(Vector3 currentPositon) { return Move(currentPosition, playerManager.transform.right); }
+        Vector3 MoveLeft(Vector3 currentPositon) { return Move(currentPosition, -playerManager.transform.right); }
+        Vector3 MoveForward(Vector3 currentPositon) { return Move(currentPosition, playerManager.transform.forward); }
+        Vector3 MoveBackward(Vector3 currentPositon) { return Move(currentPosition, -playerManager.transform.forward); }
 
         if (input.x > 0) targetPosition = MoveRight(currentPosition);
         if (input.x < 0) targetPosition = MoveLeft(currentPosition);
@@ -38,35 +52,6 @@ public class PlayerIdleState : PlayerState
         if (input.y < 0) targetPosition = MoveBackward(currentPosition);
 
         playerManager.transform.position = targetPosition;
-        /*
-         * 1. Convert input into move direction
-         * 2. Check if player can move in that direction
-         * 3. If no, play bump sound effect
-         * 4. If yes, changestate to moving
-         */
-
-        Vector3 MoveRight(Vector3 currentPositon)    
-        {
-            RaycastHit hit;
-            if (Physics.Raycast(currentPosition, playerManager.transform.right, out hit, playerManager.MoveSpeed, playerManager.DetectsCollitionsWith))
-            {
-                Debug.Log("Collision detected.");
-                return currentPosition;
-            }
-            else return currentPosition + playerManager.transform.right * playerManager.MoveSpeed;
-        }
-        Vector3 MoveLeft(Vector3 currentPositon)     { return currentPosition - playerManager.transform.right; }
-        Vector3 MoveForward(Vector3 currentPositon)  
-        {
-            RaycastHit hit;
-            if (Physics.Raycast(currentPositon, playerManager.transform.forward, out hit, playerManager.MoveSpeed, playerManager.DetectsCollitionsWith))
-            {
-                Debug.Log("Collision detected.");
-                return currentPosition;
-            }
-            else return currentPosition + playerManager.transform.forward * playerManager.MoveSpeed;
-        }
-        Vector3 MoveBackward(Vector3 currentPositon) { return currentPosition - playerManager.transform.forward; }
     }
 
     public override void handleTurnInput(float input)

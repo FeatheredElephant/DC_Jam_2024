@@ -98,7 +98,6 @@ public class PlayerManager : MonoBehaviour, IDamageable, IMove, ISubscribeToInpu
     {
         PlayerControls.Default.Move.started -= HandleMoveInput;
         PlayerControls.Default.Turn.started -= HandleTurnInput;
-        PlayerControls.Default.Cut.performed -= HandleCutInput;
         PlayerControls.Default.Cut.started -= HandleCutStartInput;
         PlayerControls.Default.Cut.performed -= HandleCutInput;
     }
@@ -124,15 +123,15 @@ public class PlayerManager : MonoBehaviour, IDamageable, IMove, ISubscribeToInpu
     {
         Ray ray = Camera.ScreenPointToRay(context.ReadValue<Vector2>());
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, CuttableTargets))
+        if (Physics.Raycast(ray, out hit, 4f, CuttableTargets))
         {
             hit.transform.SendMessage("Cut", hit.point);
-            Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
+            Debug.DrawRay(ray.origin, ray.direction * 4, Color.yellow);
             //Debug.Log("Did Hit");
         }
         else
         {
-            Debug.DrawRay(ray.origin, ray.direction * 10, Color.red);
+            Debug.DrawRay(ray.origin, ray.direction * 4, Color.red);
         }
     }
 }
