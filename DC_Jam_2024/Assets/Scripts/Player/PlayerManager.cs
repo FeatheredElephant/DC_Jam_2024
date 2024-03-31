@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.PlayerSettings;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerManager : MonoBehaviour, IDamageable, IMove, ISubscribeToInputs
@@ -30,6 +31,7 @@ public class PlayerManager : MonoBehaviour, IDamageable, IMove, ISubscribeToInpu
     #region Health Management Variables
     [field: SerializeField] public float MaxHealth { get; set; }
     public float CurrentHealth { get; set; }
+    [field: SerializeField] public Image HealthBar { get; set; }
     #endregion
 
     private void Awake()
@@ -47,6 +49,16 @@ public class PlayerManager : MonoBehaviour, IDamageable, IMove, ISubscribeToInpu
         MyRigidbody = GetComponent<Rigidbody>();
         SubscribeInputs();
     }
+    /*
+    private void Update()
+    {
+    //test health bar
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Space");
+            Damage(15);
+        }
+    }*/
 
     private void OnEnable()
     {
@@ -62,6 +74,7 @@ public class PlayerManager : MonoBehaviour, IDamageable, IMove, ISubscribeToInpu
     public void Damage(float amount)
     {
         CurrentHealth -= amount;
+        HealthBar.fillAmount = CurrentHealth / MaxHealth;
         if (CurrentHealth <= 0) Die();
     }
 
