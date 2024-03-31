@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.PlayerSettings;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerManager : MonoBehaviour, IDamageable, IMove, ISubscribeToInputs
@@ -13,6 +14,8 @@ public class PlayerManager : MonoBehaviour, IDamageable, IMove, ISubscribeToInpu
     public Rigidbody MyRigidbody { get; set; }
     [field: SerializeField] public float MoveSpeed { get; set; } = 1;
     [field: SerializeField] public LayerMask DetectsCollitionsWith {  get; set; }
+    //pause
+    [field: SerializeField] public GameObject Pausemenu { get; set; }
     #endregion
 
     #region State Machine Variables
@@ -30,6 +33,7 @@ public class PlayerManager : MonoBehaviour, IDamageable, IMove, ISubscribeToInpu
     #region Health Management Variables
     [field: SerializeField] public float MaxHealth { get; set; }
     public float CurrentHealth { get; set; }
+    [field: SerializeField] public Image HealthBar { get; set; }
     #endregion
 
     private void Awake()
@@ -47,6 +51,16 @@ public class PlayerManager : MonoBehaviour, IDamageable, IMove, ISubscribeToInpu
         MyRigidbody = GetComponent<Rigidbody>();
         SubscribeInputs();
     }
+    /*
+    private void Update()
+    {
+    //test health bar
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Space");
+            Damage(15);
+        }
+    }*/
 
     private void OnEnable()
     {
@@ -62,6 +76,7 @@ public class PlayerManager : MonoBehaviour, IDamageable, IMove, ISubscribeToInpu
     public void Damage(float amount)
     {
         CurrentHealth -= amount;
+        HealthBar.fillAmount = CurrentHealth / MaxHealth;
         if (CurrentHealth <= 0) Die();
     }
 
@@ -92,6 +107,8 @@ public class PlayerManager : MonoBehaviour, IDamageable, IMove, ISubscribeToInpu
         PlayerControls.Default.Turn.started += HandleTurnInput;
         PlayerControls.Default.Cut.started += HandleCutStartInput;
         PlayerControls.Default.Cut.performed += HandleCutInput;
+        //pause
+        PlayerControls.Default.Pause.started += HandlePauseInput;
     }
 
     public void UnsubscribeInputs()
@@ -100,6 +117,18 @@ public class PlayerManager : MonoBehaviour, IDamageable, IMove, ISubscribeToInpu
         PlayerControls.Default.Turn.started -= HandleTurnInput;
         PlayerControls.Default.Cut.started -= HandleCutStartInput;
         PlayerControls.Default.Cut.performed -= HandleCutInput;
+        //pause
+        PlayerControls.Default.Pause.started -= HandlePauseInput;
+    }
+    //pause
+    void HandlePauseInput(InputAction.CallbackContext context)
+    {
+        if (context.ReadValue<float>() > 0.1f)
+        {
+            Pausemenu.SetActive(true);
+            Debug.Log("Pause");
+        }
+        
     }
 
     void HandleMoveInput(InputAction.CallbackContext context)
