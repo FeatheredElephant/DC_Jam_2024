@@ -14,6 +14,8 @@ public class PlayerManager : MonoBehaviour, IDamageable, IMove, ISubscribeToInpu
     public Rigidbody MyRigidbody { get; set; }
     [field: SerializeField] public float MoveSpeed { get; set; } = 1;
     [field: SerializeField] public LayerMask DetectsCollitionsWith {  get; set; }
+    //pause
+    [field: SerializeField] public GameObject Pausemenu { get; set; }
     #endregion
 
     #region State Machine Variables
@@ -105,6 +107,8 @@ public class PlayerManager : MonoBehaviour, IDamageable, IMove, ISubscribeToInpu
         PlayerControls.Default.Turn.started += HandleTurnInput;
         PlayerControls.Default.Cut.started += HandleCutStartInput;
         PlayerControls.Default.Cut.performed += HandleCutInput;
+        //pause
+        PlayerControls.Default.Pause.started += HandlePauseInput;
     }
 
     public void UnsubscribeInputs()
@@ -114,6 +118,18 @@ public class PlayerManager : MonoBehaviour, IDamageable, IMove, ISubscribeToInpu
         PlayerControls.Default.Cut.performed -= HandleCutInput;
         PlayerControls.Default.Cut.started -= HandleCutStartInput;
         PlayerControls.Default.Cut.performed -= HandleCutInput;
+        //pause
+        PlayerControls.Default.Pause.started -= HandlePauseInput;
+    }
+    //pause
+    void HandlePauseInput(InputAction.CallbackContext context)
+    {
+        if (context.ReadValue<float>() > 0.1f)
+        {
+            Pausemenu.SetActive(true);
+            Debug.Log("Pause");
+        }
+        
     }
 
     void HandleMoveInput(InputAction.CallbackContext context)
